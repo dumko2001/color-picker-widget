@@ -195,6 +195,7 @@ function ColorPicker() {
                 value={hex}
                 onChange={handleHexChange}
                 className="color-input hex-input"
+                style={{ textTransform: 'uppercase' }}
               />
             </div>
             
