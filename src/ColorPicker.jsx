@@ -20,7 +20,7 @@ function ColorPicker() {
 
   useEffect(() => {
     const newColor = tinycolor(color);
-    setHex(newColor.toHexString());
+    setHex(newColor.toHexString().toUpperCase());
     setRgb(newColor.toRgb());
     
     // Check if EyeDropper API is supported
@@ -61,7 +61,7 @@ function ColorPicker() {
   };
 
   const handleHexChange = (e) => {
-    const newHex = e.target.value;
+    const newHex = e.target.value.toUpperCase();
     setHex(newHex);
     
     if (tinycolor(newHex).isValid()) {
@@ -159,7 +159,7 @@ function ColorPicker() {
             style={{ backgroundColor: hex }}
             disabled={!isEyeDropperSupported}
           >
-            <span className="eyedropper-icon">💉</span>
+            <img src="/eyedropper.png" alt="Eyedropper" className="eyedropper-icon" />
           </button>
           
           <div className="right-controls">
