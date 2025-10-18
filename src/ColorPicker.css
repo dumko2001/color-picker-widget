@@ -1,6 +1,7 @@
 /* Main Widget Container */
 .color-picker-widget {
-  width: 300px;
+  width: 100%;
+  max-width: 300px;
   background-color: #f8f9fa;
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
@@ -56,25 +57,26 @@
 .controls-row {
   margin-bottom: 20px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .controls-row:last-child {
   margin-bottom: 0;
 }
 
-/* Row 1: Eyedropper and Hue Slider */
+/* Row 1: Eyedropper, Hue Slider, and Swatches */
 .eyedropper-button {
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 15px;
+  margin-right: 12px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
 }
 
 .eyedropper-button:disabled {
@@ -83,14 +85,21 @@
 }
 
 .eyedropper-icon {
-  font-size: 18px;
+  font-size: 16px;
   color: white;
   filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.3));
 }
 
-.hue-slider {
+.right-controls {
   flex: 1;
-  height: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.hue-slider {
+  width: 100%;
+  height: 10px;
   -webkit-appearance: none;
   background: linear-gradient(
     to right,
@@ -102,14 +111,15 @@
     #ff00ff 83%,
     #ff0000 100%
   );
-  border-radius: 6px;
+  border-radius: 5px;
   outline: none;
+  margin-top: 0;
 }
 
 .hue-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
   background: #9751F2;
   border: 2px solid white;
@@ -117,67 +127,131 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* Row 2: Color Swatches */
+/* Color Swatches */
 .color-swatches {
   display: flex;
-  justify-content: center;
-  gap: 10px;
+  justify-content: flex-start;
+  gap: 6px;
   width: 100%;
 }
 
 .swatch {
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   cursor: pointer;
   border: 1px solid #ddd;
   transition: transform 0.2s;
+  flex-shrink: 0;
 }
 
 .swatch:hover {
   transform: scale(1.1);
 }
 
-/* Row 3: Color Value Inputs */
+/* Row 2: Color Value Inputs */
 .color-inputs {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   width: 100%;
 }
 
 .input-group {
   display: flex;
   flex-direction: column;
+}
+
+.hex-group {
+  flex: 1.5;
+}
+
+.rgb-group {
   flex: 1;
 }
 
 .input-group label {
   font-size: 12px;
-  color: #666;
-  margin-bottom: 5px;
-  text-align: center;
+  color: #333;
+  margin-bottom: 6px;
+  text-align: left;
+  font-weight: bold;
 }
 
 .color-input {
-  padding: 8px;
+  padding: 8px 6px;
   border: 1px solid #ddd;
-  border-radius: 6px;
-  font-size: 14px;
+  border-radius: 4px;
+  font-size: 12px;
   text-align: center;
   background-color: #ffffff;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  height: 36px;
+  -moz-appearance: textfield;
 }
 
-.hex-input {
-  flex: 2;
-}
-
-.rgb-input {
-  flex: 1;
+.color-input::-webkit-outer-spin-button,
+.color-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .color-input:focus {
   outline: none;
   border-color: #9751F2;
   box-shadow: 0 0 0 2px rgba(151, 81, 242, 0.2);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 480px) {
+  .color-picker-widget {
+    max-width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+    height: 100vh;
+  }
+  
+  .color-selection-panel {
+    border-radius: 0;
+  }
+  
+  .controls-area {
+    padding: 15px;
+  }
+  
+  .controls-row {
+    margin-bottom: 15px;
+  }
+  
+  .eyedropper-button {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .eyedropper-icon {
+    font-size: 14px;
+  }
+  
+  .color-swatches {
+    gap: 5px;
+  }
+  
+  .swatch {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .color-inputs {
+    gap: 6px;
+  }
+  
+  .input-group label {
+    font-size: 11px;
+  }
+  
+  .color-input {
+    padding: 6px 4px;
+    font-size: 11px;
+    height: 32px;
+  }
 }

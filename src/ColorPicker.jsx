@@ -151,7 +151,7 @@ function ColorPicker() {
       
       {/* Bottom Section: Controls Area */}
       <div className="controls-area">
-        {/* Row 1: Eyedropper and Hue Slider */}
+        {/* Row 1: Eyedropper, Hue Slider, and Swatches */}
         <div className="controls-row">
           <button 
             onClick={openEyeDropper} 
@@ -159,37 +159,36 @@ function ColorPicker() {
             style={{ backgroundColor: hex }}
             disabled={!isEyeDropperSupported}
           >
-            <span className="eyedropper-icon">🔍</span>
+            <span className="eyedropper-icon">🩸</span>
           </button>
           
-          <input
-            type="range"
-            min="0"
-            max="360"
-            value={color.h}
-            onChange={handleHueChange}
-            className="hue-slider"
-          />
-        </div>
-        
-        {/* Row 2: Color Swatches */}
-        <div className="controls-row">
-          <div className="color-swatches">
-            {colorSwatches.map((swatch, index) => (
-              <div
-                key={index}
-                className="swatch"
-                style={{ backgroundColor: swatch }}
-                onClick={() => selectSwatch(swatch)}
-              />
-            ))}
+          <div className="right-controls">
+            <input
+              type="range"
+              min="0"
+              max="360"
+              value={color.h}
+              onChange={handleHueChange}
+              className="hue-slider"
+            />
+            
+            <div className="color-swatches">
+              {colorSwatches.map((swatch, index) => (
+                <div
+                  key={index}
+                  className="swatch"
+                  style={{ backgroundColor: swatch }}
+                  onClick={() => selectSwatch(swatch)}
+                />
+              ))}
+            </div>
           </div>
         </div>
         
-        {/* Row 3: Color Value Inputs */}
+        {/* Row 2: Color Value Inputs */}
         <div className="controls-row">
           <div className="color-inputs">
-            <div className="input-group">
+            <div className="input-group hex-group">
               <label>HEX</label>
               <input
                 type="text"
@@ -199,7 +198,7 @@ function ColorPicker() {
               />
             </div>
             
-            <div className="input-group">
+            <div className="input-group rgb-group">
               <label>R</label>
               <input
                 type="number"
@@ -211,7 +210,7 @@ function ColorPicker() {
               />
             </div>
             
-            <div className="input-group">
+            <div className="input-group rgb-group">
               <label>G</label>
               <input
                 type="number"
@@ -223,7 +222,7 @@ function ColorPicker() {
               />
             </div>
             
-            <div className="input-group">
+            <div className="input-group rgb-group">
               <label>B</label>
               <input
                 type="number"
