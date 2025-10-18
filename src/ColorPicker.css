@@ -1,7 +1,7 @@
 /* Main Widget Container */
 .color-picker-widget {
   width: 100%;
-  max-width: 300px;
+  max-width: 320px;
   background-color: #f8f9fa;
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
@@ -57,7 +57,7 @@
 .controls-row {
   margin-bottom: 20px;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .controls-row:last-child {
@@ -66,15 +66,15 @@
 
 /* Row 1: Eyedropper, Hue Slider, and Swatches */
 .eyedropper-button {
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: 6px;
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 12px;
+  margin-right: 15px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   flex-shrink: 0;
 }
@@ -85,7 +85,7 @@
 }
 
 .eyedropper-icon {
-  font-size: 16px;
+  font-size: 18px;
   color: white;
   filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.3));
 }
@@ -99,7 +99,7 @@
 
 .hue-slider {
   width: 100%;
-  height: 10px;
+  height: 12px;
   -webkit-appearance: none;
   background: linear-gradient(
     to right,
@@ -111,15 +111,15 @@
     #ff00ff 83%,
     #ff0000 100%
   );
-  border-radius: 5px;
+  border-radius: 6px;
   outline: none;
   margin-top: 0;
 }
 
 .hue-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
   background: #9751F2;
   border: 2px solid white;
@@ -130,14 +130,14 @@
 /* Color Swatches */
 .color-swatches {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   gap: 6px;
   width: 100%;
 }
 
 .swatch {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   cursor: pointer;
   border: 1px solid #ddd;
@@ -154,6 +154,7 @@
   display: flex;
   gap: 8px;
   width: 100%;
+  align-items: flex-start;
 }
 
 .input-group {
@@ -202,6 +203,11 @@
   box-shadow: 0 0 0 2px rgba(151, 81, 242, 0.2);
 }
 
+.spacer {
+  width: 15px;
+  flex-shrink: 0;
+}
+
 /* Mobile Responsiveness */
 @media (max-width: 480px) {
   .color-picker-widget {
@@ -224,12 +230,12 @@
   }
   
   .eyedropper-button {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
   }
   
   .eyedropper-icon {
-    font-size: 14px;
+    font-size: 16px;
   }
   
   .color-swatches {
@@ -237,8 +243,8 @@
   }
   
   .swatch {
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
   }
   
   .color-inputs {
@@ -253,5 +259,9 @@
     padding: 6px 4px;
     font-size: 11px;
     height: 32px;
+  }
+  
+  .spacer {
+    width: 10px;
   }
 }

@@ -106,7 +106,7 @@ function ColorPicker() {
 
   // Predefined color swatches
   const colorSwatches = [
-    '#FFFFFF', '#FFD1DC', '#E0BBE4', '#95E1D3', '#FCE77D', '#F8F8F8', '#E0E0E0'
+    '#FFFFFF', '#FFD1DC', '#E0BBE4', '#95E1D3', '#FCE77D', '#F8F8F8', '#E0E0E0', '#CCCCCC'
   ];
 
   const selectSwatch = (swatchColor) => {
@@ -159,7 +159,7 @@ function ColorPicker() {
             style={{ backgroundColor: hex }}
             disabled={!isEyeDropperSupported}
           >
-            <span className="eyedropper-icon">🩸</span>
+            <span className="eyedropper-icon">💉</span>
           </button>
           
           <div className="right-controls">
@@ -197,6 +197,8 @@ function ColorPicker() {
                 className="color-input hex-input"
               />
             </div>
+            
+            <div className="spacer"></div>
             
             <div className="input-group rgb-group">
               <label>R</label>
