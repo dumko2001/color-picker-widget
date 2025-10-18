@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import tinycolor from 'tinycolor2';
 import './ColorPicker.css';
+import eyedropperIcon from './assets/eyedropper.png';
 
 function ColorPicker() {
   const [color, setColor] = useState({
@@ -10,22 +11,19 @@ function ColorPicker() {
     a: 1    // Alpha (opacity)
   });
 
-  // Derived color values
-  const [hex, setHex] = useState('#9751F2');
-  const [rgb, setRgb] = useState({ r: 151, g: 81, b: 242 });
+  // Calculate derived values directly from the color state
+  const tinyColorInstance = tinycolor(color);
+  const hex = tinyColorInstance.toHexString().toUpperCase();
+  const rgb = tinyColorInstance.toRgb();
 
   const saturationPanelRef = useRef(null);
   const isDragging = useRef(false);
   const [isEyeDropperSupported, setIsEyeDropperSupported] = useState(false);
 
   useEffect(() => {
-    const newColor = tinycolor(color);
-    setHex(newColor.toHexString().toUpperCase());
-    setRgb(newColor.toRgb());
-    
     // Check if EyeDropper API is supported
     setIsEyeDropperSupported(typeof window !== 'undefined' && window.EyeDropper);
-  }, [color]);
+  }, []);
 
   const handleHueChange = (e) => {
     setColor(prev => ({ ...prev, h: parseInt(e.target.value) }));
@@ -46,6 +44,22 @@ function ColorPicker() {
     isDragging.current = false;
   };
 
+  const handleSaturationBrightnessTouchStart = (e) => {
+    isDragging.current = true;
+    handleSaturationBrightnessChange(e.touches[0]);
+  };
+
+  const handleSaturationBrightnessTouchMove = (e) => {
+    if (isDragging.current) {
+      e.preventDefault();
+      handleSaturationBrightnessChange(e.touches[0]);
+    }
+  };
+
+  const handleSaturationBrightnessTouchEnd = () => {
+    isDragging.current = false;
+  };
+
   const handleSaturationBrightnessChange = (e) => {
     if (!saturationPanelRef.current) return;
     
@@ -62,8 +76,7 @@ function ColorPicker() {
 
   const handleHexChange = (e) => {
     const newHex = e.target.value.toUpperCase();
-    setHex(newHex);
-    
+    // Validate and update color if it's a valid hex
     if (tinycolor(newHex).isValid()) {
       const newColor = tinycolor(newHex).toHsl();
       setColor({
@@ -77,8 +90,6 @@ function ColorPicker() {
 
   const handleRgbChange = (channel, value) => {
     const newRgb = { ...rgb, [channel]: parseInt(value) || 0 };
-    setRgb(newRgb);
-    
     const newColor = tinycolor(newRgb).toHsl();
     setColor({
       h: newColor.h,
@@ -120,22 +131,33 @@ function ColorPicker() {
   };
 
   useEffect(() => {
+    // Add mouse event listeners
     document.addEventListener('mousemove', handleSaturationBrightnessMouseMove);
     document.addEventListener('mouseup', handleSaturationBrightnessMouseUp);
     
+    // Add touch event listeners
+    document.addEventListener('touchmove', handleSaturationBrightnessTouchMove, { passive: false });
+    document.addEventListener('touchend', handleSaturationBrightnessTouchEnd);
+    
     return () => {
+      // Remove mouse event listeners
       document.removeEventListener('mousemove', handleSaturationBrightnessMouseMove);
       document.removeEventListener('mouseup', handleSaturationBrightnessMouseUp);
+      
+      // Remove touch event listeners
+      document.removeEventListener('touchmove', handleSaturationBrightnessTouchMove);
+      document.removeEventListener('touchend', handleSaturationBrightnessTouchEnd);
     };
   }, []);
 
   return (
-    <div className="color-picker-widget">
+    <div className="color-picker-widget" style={{ '--selected-color': hex }}>
       {/* Top Section: Color Selection Panel */}
       <div 
         className="color-selection-panel"
         style={{ backgroundColor: `hsl(${color.h}, 100%, 50%)` }}
         onMouseDown={handleSaturationBrightnessMouseDown}
+        onTouchStart={handleSaturationBrightnessTouchStart}
         ref={saturationPanelRef}
       >
         <div className="saturation-white-gradient" />
@@ -159,7 +181,7 @@ function ColorPicker() {
             style={{ backgroundColor: hex }}
             disabled={!isEyeDropperSupported}
           >
-            <img src="/eyedropper.png" alt="Eyedropper" className="eyedropper-icon" />
+            <img src={eyedropperIcon} alt="Eyedropper" className="eyedropper-icon" />
           </button>
           
           <div className="right-controls">
@@ -195,7 +217,6 @@ function ColorPicker() {
                 value={hex}
                 onChange={handleHexChange}
                 className="color-input hex-input"
-                style={{ textTransform: 'uppercase' }}
               />
             </div>
             
